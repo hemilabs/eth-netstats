@@ -1,6 +1,5 @@
+.dockerignore
 .git
 .gitignore
-.dockerignore
-node_modules
-npm-debug.log
 Dockerfile
+node_modules
