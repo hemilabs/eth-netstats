@@ -1,0 +1,4 @@
+resources:
+- ethstats-server-deployment.yaml
+- ethstats-server-service.yaml
+- ethstats-server-ingress.yaml

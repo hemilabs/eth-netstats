@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ethstats-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ethstats-server
+  template:
+    metadata:
+      labels:
+        app: ethstats-server
+    spec:
+      containers:
+      - name: ethstats-server
+        image: hemilabs/ethstats-server:latest
+        ports:
+        - containerPort: 3000
+        envFrom:
+        - configMapRef:
+            name: ethstats-env
+      restartPolicy: Always
+      imagePullSecrets:
+      - name: dockerhub-secret
+
+  
+
+

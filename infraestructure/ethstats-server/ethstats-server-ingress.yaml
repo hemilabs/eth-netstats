@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ethstats-ingress
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-nginx
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: testnet.ethstats.hemi.xyz
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: ethstats-server
+            port:
+              number: 3000
+  tls:
+  - hosts:
+    - testnet.ethstats.hemi.xyz
+    secretName: ethstats-tls
