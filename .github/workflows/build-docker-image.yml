@@ -32,28 +32,3 @@ jobs:
             with:
               push: true
               tags: ${{ steps.meta.outputs.tags }}
-
-          - name: Install kubectl
-            uses: azure/k8s-set-context@v3
-            with:
-              kubeconfig: ${{ secrets.VKE_TEST_KUBECONFIG }}
-          - name: Install Kustomize
-            uses: imranismail/setup-kustomize@v2
-        
-          - name: Configure K8s Cluster Access for VKE
-            env:
-                VKE_TEST_KUBECONFIG: ${{ secrets.VKE_TEST_KUBECONFIG }}
-              run: |
-                  echo $VKE_TEST_KUBECONFIG > ./kubeconfig.yaml
-                  export KUBECONFIG=$PWD/kubeconfig.yaml
-          - name: Update Image Tag & Namespace in Client
-            run: |
-                  kustomize edit set image hemilabs/ethstats-server:latest=hemilabs/ethstats-server:${{ steps.meta.outputs.tags }}
-                  kustomize edit set namespace ethstats
-            working-directory: ./infraestructure/ethstats-server
-        
-          - name: Deploy to VKE
-            run: |
-                kustomize build .
-                kubectl apply -k .
-            working-directory: ./infraestructure/ethstats-server
