@@ -1,9 +1,9 @@
 name: Ethstats Web Build/Push & VKE Deployment 
 on:
-  push:
-    tags:
-      - 'mainnet-v*'
-      - 'testnet-v*'
+  workflow_run:
+    workflows: ["Build Docker image"]
+    types:
+      - completed
       
 jobs:
   dockerhubpush-VKEdeploy:
@@ -20,7 +20,11 @@ jobs:
               echo "namespace=ethstats-main" >> $GITHUB_ENV
             elif [[ $TAG_NAME == "testnet-v"* ]]; then
               echo "namespace=ethstats" >> $GITHUB_ENV
+            else
+              echo "::error::Unrecognized tag format: $TAG_NAME"
+              exit 1
             fi
+            
         - name: Checkout code
           uses: actions/checkout@v3
 
