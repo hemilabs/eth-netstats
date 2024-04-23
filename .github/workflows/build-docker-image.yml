@@ -9,7 +9,7 @@ on:
   
 jobs:
   build:
-    name: Build ethstats-server
+    name: Build & Deploy ethstats-server
     runs-on: ubuntu-latest  
     steps:
           - name: Checkout repo
