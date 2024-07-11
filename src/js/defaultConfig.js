@@ -1,2 +1,2 @@
-var networkName = 'Ethereum';
+var networkName = 'Hemi';
 var faviconPath = '/favicon.ico';
